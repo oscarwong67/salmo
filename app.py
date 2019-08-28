@@ -4,21 +4,21 @@ from collections import Counter
 import csv
 
 NUM_PAGES_TO_SCRAPE = 9
-OUTPUT_FILENAME = 'INDEED_USA_AUG_4_2019.csv'
+OUTPUT_FILENAME = 'INDEED_USA_AUG_27_2019.csv'
 langs = csv.DictReader(open("languages.csv")).fieldnames
 
 def parse_skills(counts, parsed_skills):
-  words_by_count = counts.most_common(300)
+  words_by_count = counts.most_common(1000)
   for word_obj in words_by_count:
     if word_obj[0].lower() in langs:
       parsed_skills.append(word_obj)
 
 def write_skills_csv(parsed_skills):
-  with open(OUTPUT_FILENAME, 'wb') as out_file:
+  with open(OUTPUT_FILENAME, 'w') as out_file:
     writer = csv.writer(out_file)
-    writer.writerow([b'language', b'num jobs'])
+    writer.writerow(['language', 'num jobs'])
     for skill in parsed_skills:
-      writer.writerow([skill[0].encode(), skill[1].encode()])
+      writer.writerow([skill[0], skill[1]])
 
 def scrape_indeed(url):
   job_urls = []
@@ -40,7 +40,7 @@ def main():
   # scrape_indeed('https://www.indeed.ca/jobs?q=software+engineering+internship&jt=internship')
 
   # Indeed.com "software engineering internship" - first page, filtered by internship, no location
-  scrape_indeed('https://www.indeed.com/jobs?q=software%20engineering%20internship&jt=internship&vjk=a053bc5378958f13')
+  scrape_indeed('https://www.indeed.com/jobs?q=software+engineering+internship&jt=internship')
   
 if __name__== "__main__":
   main()

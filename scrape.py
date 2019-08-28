@@ -12,7 +12,7 @@ def get_job_postings(soup, job_urls):
     job_urls.append(f'https://www.indeed.ca{url}')
 
 def scrape_indeed_feed(url, page, job_urls):
-  raw_html = simple_get(f"{url}&start={page * 20}")
+  raw_html = simple_get(f"{url}&start={page * 15}")
   soup = BeautifulSoup(raw_html, 'html.parser')
   get_job_postings(soup, job_urls)
 
